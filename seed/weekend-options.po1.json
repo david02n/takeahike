@@ -1,0 +1,527 @@
+{
+  "meta": {
+    "originPreset": "PO1",
+    "createdAt": "2026-01-31",
+    "notes": "Week-1 seed. Mainland-only. 4 areas x 3 options. Each option includes Plan A and Plan B variants. Route links are placeholders: replace with real URLs from official sources first."
+  },
+  "options": [
+    {
+      "id": "wknd_nf_001",
+      "area": { "id": "new_forest", "name": "New Forest" },
+      "baseTown": { "name": "Lyndhurst", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 70, "bandLabel": "~1h10" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Loop-style day: finish near base (no taxi required)",
+        "steps": [
+          "Drive to Lyndhurst and park (overnight).",
+          "Sat: complete the selected hike variant (Plan A or Plan B).",
+          "Sun: short local walk or breakfast, then drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "New Forest big loop (heath + forest)",
+          "durationHours": 6.5,
+          "distanceKm": 21,
+          "difficulty": "CHALLENGING",
+          "characterTags": ["RURAL", "CLEAR_PATHS"],
+          "routeReferences": [
+            {
+              "sourceType": "NATIONAL_PARK",
+              "title": "New Forest NP route reference",
+              "url": "https://example.com",
+              "note": "Official park guidance",
+              "lastCheckedAt": "2026-01-31"
+            }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered forest loop (shorter)",
+          "durationHours": 6.0,
+          "distanceKm": 19,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            {
+              "sourceType": "FORESTRY_ENGLAND",
+              "title": "Forestry England route reference",
+              "url": "https://example.com",
+              "note": "Trail info and facilities",
+              "lastCheckedAt": "2026-01-31"
+            }
+          ]
+        }
+      },
+      "stayLinks": [
+        {
+          "townName": "Lyndhurst",
+          "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Lyndhurst+New+Forest"
+        }
+      ]
+    },
+
+    {
+      "id": "wknd_nf_002",
+      "area": { "id": "new_forest", "name": "New Forest" },
+      "baseTown": { "name": "Brockenhurst", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 65, "bandLabel": "~1h05" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Base-town loop day (finish where you started)",
+        "steps": [
+          "Drive to Brockenhurst and park (overnight).",
+          "Sat: complete hike variant (Plan A/B).",
+          "Sun: optional shorter walk, then drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Brockenhurst → Rhinefield → Burley (long loop)",
+          "durationHours": 6.5,
+          "distanceKm": 22,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "FOREST"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route guide", "url": "https://example.com", "note": "Replace with official/blog source", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Rhinefield/Blackwater woodland focus (sheltered)",
+          "durationHours": 6.0,
+          "distanceKm": 19,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "FORESTRY_ENGLAND", "title": "Forestry England reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Brockenhurst", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Brockenhurst+New+Forest" }
+      ]
+    },
+
+    {
+      "id": "wknd_nf_003",
+      "area": { "id": "new_forest", "name": "New Forest" },
+      "baseTown": { "name": "Ringwood", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 60, "bandLabel": "~1h00" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop (finish at car)",
+        "steps": [
+          "Drive to Ringwood and park (overnight).",
+          "Sat: complete hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Avon Valley + forest edge long loop",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered valley option (shorter)",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Ringwood", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Ringwood" }
+      ]
+    },
+
+    {
+      "id": "wknd_sd_001",
+      "area": { "id": "south_downs", "name": "South Downs" },
+      "baseTown": { "name": "Lewes", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 110, "bandLabel": "~1h50" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Base-town loop day (finish at car)",
+        "steps": [
+          "Drive to Lewes and park (overnight).",
+          "Sat: hike variant (Plan A/B).",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Downs ridgeline big views day",
+          "durationHours": 6.5,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "EXPOSED", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "NATIONAL_PARK", "title": "SDNP reference", "url": "https://example.com", "note": "Official walk page", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered valley/woodland alternative",
+          "durationHours": 6.0,
+          "distanceKm": 19,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "NATIONAL_PARK", "title": "SDNP reference", "url": "https://example.com", "note": "Official walk page", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Lewes", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Lewes" }
+      ]
+    },
+
+    {
+      "id": "wknd_sd_002",
+      "area": { "id": "south_downs", "name": "South Downs" },
+      "baseTown": { "name": "Petersfield", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 55, "bandLabel": "~0h55" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop day (finish at car)",
+        "steps": [
+          "Drive to Petersfield and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Ridge + escarpment day (views)",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "NATIONAL_PARK", "title": "SDNP reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered heath/woodland mix",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Petersfield", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Petersfield" }
+      ]
+    },
+
+    {
+      "id": "wknd_sd_003",
+      "area": { "id": "south_downs", "name": "South Downs" },
+      "baseTown": { "name": "Arundel", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 85, "bandLabel": "~1h25" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Base-town loop (finish at car)",
+        "steps": [
+          "Drive to Arundel and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Downs ridge circuit (big views)",
+          "durationHours": 6.5,
+          "distanceKm": 22,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "NATIONAL_TRAILS", "title": "National Trails reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "River valley / sheltered alternative",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "SHELTERED"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Arundel", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Arundel" }
+      ]
+    },
+
+    {
+      "id": "wknd_do_001",
+      "area": { "id": "dorset_purbeck", "name": "Dorset / Purbeck / Jurassic Coast" },
+      "baseTown": { "name": "Swanage", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 120, "bandLabel": "~2h00" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop day (finish at car)",
+        "steps": [
+          "Drive to Swanage and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Purbeck ridge + coast big day",
+          "durationHours": 7.0,
+          "distanceKm": 21,
+          "difficulty": "CHALLENGING",
+          "characterTags": ["RURAL", "EXPOSED", "COASTAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "JURASSIC_COAST", "title": "Jurassic Coast reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "More sheltered inland Purbeck alternative",
+          "durationHours": 6.0,
+          "distanceKm": 19,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Swanage", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Swanage+Dorset" }
+      ]
+    },
+
+    {
+      "id": "wknd_do_002",
+      "area": { "id": "dorset_purbeck", "name": "Dorset / Purbeck / Jurassic Coast" },
+      "baseTown": { "name": "Weymouth", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 115, "bandLabel": "~1h55" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop day (finish at car)",
+        "steps": [
+          "Drive to Weymouth and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Coastal cliffs day (exposed)",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["COASTAL", "EXPOSED", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Lower, clearer paths alternative",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["COASTAL", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Weymouth", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Weymouth" }
+      ]
+    },
+
+    {
+      "id": "wknd_do_003",
+      "area": { "id": "dorset_purbeck", "name": "Dorset / Purbeck / Jurassic Coast" },
+      "baseTown": { "name": "Dorchester", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 100, "bandLabel": "~1h40" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop day (finish at car)",
+        "steps": [
+          "Drive to Dorchester and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Rural ridge day (inland + views)",
+          "durationHours": 6.5,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered countryside alternative",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Dorchester", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Dorchester" }
+      ]
+    },
+
+    {
+      "id": "wknd_ch_001",
+      "area": { "id": "chichester_goodwood", "name": "Chichester Coast & Downs / Goodwood" },
+      "baseTown": { "name": "Chichester", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 45, "bandLabel": "~0h45" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Town-based loop (finish at car)",
+        "steps": [
+          "Drive to Chichester and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Downs ridgeline + viewpoints day",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["RURAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "NATIONAL_PARK", "title": "SDNP reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered lower-route alternative",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["RURAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Chichester", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Chichester" }
+      ]
+    },
+
+    {
+      "id": "wknd_ch_002",
+      "area": { "id": "chichester_goodwood", "name": "Chichester Coast & Downs / Goodwood" },
+      "baseTown": { "name": "Havant", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 25, "bandLabel": "~0h25" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Local base-town loop day",
+        "steps": [
+          "Drive to Havant and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Coastal + harbour long loop",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["COASTAL", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Harbour conservancy reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "More sheltered harbour alternative",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["COASTAL", "SHELTERED"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Havant", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Havant" }
+      ]
+    },
+
+    {
+      "id": "wknd_ch_003",
+      "area": { "id": "chichester_goodwood", "name": "Chichester Coast & Downs / Goodwood" },
+      "baseTown": { "name": "Bognor Regis", "isBiggerTown": true },
+      "drive": { "fromOriginMins": 55, "bandLabel": "~0h55" },
+      "transportReturn": {
+        "type": "PT_RETURN_NO_TAXI",
+        "summary": "Coastal base-town loop",
+        "steps": [
+          "Drive to Bognor Regis and park (overnight).",
+          "Sat: hike variant.",
+          "Sun: drive home."
+        ],
+        "confidence": "CURATED"
+      },
+      "satHike": {
+        "planA": {
+          "title": "Coast + downs day (mixed)",
+          "durationHours": 6.0,
+          "distanceKm": 20,
+          "difficulty": "MODERATE_PLUS",
+          "characterTags": ["COASTAL", "BIG_VIEWS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        },
+        "planB": {
+          "title": "Sheltered coastal/park alternative",
+          "durationHours": 6.0,
+          "distanceKm": 18,
+          "difficulty": "EASY",
+          "characterTags": ["COASTAL", "SHELTERED", "CLEAR_PATHS"],
+          "routeReferences": [
+            { "sourceType": "OTHER", "title": "Route reference", "url": "https://example.com", "note": "Replace with real link", "lastCheckedAt": "2026-01-31" }
+          ]
+        }
+      },
+      "stayLinks": [
+        { "townName": "Bognor Regis", "googleHotelUrl": "https://www.google.com/search?q=hotels+in+Bognor+Regis" }
+      ]
+    }
+  ]
+}
