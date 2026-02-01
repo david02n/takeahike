@@ -1,5 +1,6 @@
 import Link from "next/link";
-import type { PlanVariant, WeekendOptionsResponse, WeekendOption } from "@/lib/types";
+import type { PlanVariant, WeekendOption } from "@/lib/types";
+import { headers } from "next/headers";
 
 function getPlanVariant(searchParams: Record<string, string | string[] | undefined>): PlanVariant {
   const raw = searchParams.plan;
@@ -34,37 +35,27 @@ function routeSourceLabel(sourceType: string) {
   }
 }
 
-export default async function PlanPage({
+export default async function PlanSlugPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const { id } = await params;
-  const origin = (Array.isArray(searchParams.origin) ? searchParams.origin[0] : searchParams.origin) ?? "PO1";
-  const maxDriveMins = Number((Array.isArray(searchParams.maxDriveMins) ? searchParams.maxDriveMins[0] : searchParams.maxDriveMins) ?? 120);
+  const { slug } = await params;
   const plan = getPlanVariant(searchParams);
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/weekend-options?origin=${encodeURIComponent(
-    origin
-  )}&maxDriveMins=${maxDriveMins}`;
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
 
-  const res = await fetch(url, { cache: "no-store" });
-  const data = (await res.json()) as WeekendOptionsResponse;
-  const opt = data.options.find((o) => o.id === id) as WeekendOption | undefined;
+  const planUrl = `${proto}://${host}/api/plan/${encodeURIComponent(slug)}`;
+  const payload = (await (await fetch(planUrl, { cache: "no-store" })).json()) as any;
 
-  if (!opt) {
-    return (
-      <main style={{ maxWidth: 760, margin: "40px auto", padding: "0 16px" }}>
-        <h1>Plan not found</h1>
-        <p>
-          This prototype uses seeded data; the id you requested isn’t available for the current drive time filter.
-        </p>
-        <Link href={`/options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}`}>Back to options</Link>
-      </main>
-    );
-  }
+  // Payload shape is our stored snapshot. In MVP we store the whole option.
+  const opt = payload.option as WeekendOption;
+  const origin = payload.originLabel ?? "PO1";
+  const maxDriveMins = payload.maxDriveMins ?? 120;
 
   const hike = plan === "A" ? opt.satHike.planA : opt.satHike.planB;
 
@@ -84,7 +75,7 @@ export default async function PlanPage({
         <div style={{ fontSize: 12, color: "#666" }}>Weather plan</div>
         <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
           <Link
-            href={`/plan/${encodeURIComponent(opt.id)}?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=A`}
+            href={`/plan/${encodeURIComponent(slug)}?plan=A`}
             style={{
               padding: "8px 12px",
               border: "1px solid #ddd",
@@ -97,7 +88,7 @@ export default async function PlanPage({
             Plan A (good weather)
           </Link>
           <Link
-            href={`/plan/${encodeURIComponent(opt.id)}?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=B`}
+            href={`/plan/${encodeURIComponent(slug)}?plan=B`}
             style={{
               padding: "8px 12px",
               border: "1px solid #ddd",
@@ -127,7 +118,7 @@ export default async function PlanPage({
           Use these links for navigation and the latest trail notes.
         </div>
         <ul>
-          {hike.routeReferences.map((r, idx) => (
+          {hike.routeReferences.map((r: any, idx: number) => (
             <li key={idx} style={{ marginBottom: 8 }}>
               <a href={r.url} target="_blank" rel="noreferrer">
                 {r.title}
@@ -147,7 +138,7 @@ export default async function PlanPage({
         <h2 style={{ fontSize: 16, marginTop: 0 }}>Sunday return-to-car (no taxis)</h2>
         <div style={{ fontSize: 13, color: "#444" }}>{opt.transportReturn.summary}</div>
         <ol style={{ marginTop: 10 }}>
-          {opt.transportReturn.steps.map((s, idx) => (
+          {opt.transportReturn.steps.map((s: string, idx: number) => (
             <li key={idx} style={{ marginBottom: 6 }}>
               {s}
             </li>
@@ -164,7 +155,7 @@ export default async function PlanPage({
           You’ll search and book on Google/partner sites. Prices and availability are shown there.
         </div>
         <ul>
-          {opt.stayLinks.map((l, idx) => (
+          {opt.stayLinks.map((l: any, idx: number) => (
             <li key={idx} style={{ marginBottom: 10 }}>
               <a href={l.googleHotelUrl} target="_blank" rel="noreferrer">
                 Search hotels on Google ({l.townName})
@@ -179,19 +170,10 @@ export default async function PlanPage({
         <div style={{ fontSize: 12, color: "#666" }}>Share</div>
         <input
           readOnly
-          value={`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/plan/${encodeURIComponent(
-            opt.id
-          )}?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=${plan}`}
-          style={{
-            width: "100%",
-            padding: "10px 12px",
-            border: "1px solid #ddd",
-            borderRadius: 10,
-          }}
+          value={`${proto}://${host}/plan/${encodeURIComponent(slug)}?plan=${plan}`}
+          style={{ width: "100%", padding: "10px 12px", border: "1px solid #ddd", borderRadius: 10 }}
         />
-        <div style={{ fontSize: 12, color: "#666", marginTop: 6 }}>
-          Copy this link to share.
-        </div>
+        <div style={{ fontSize: 12, color: "#666", marginTop: 6 }}>Copy this link to share.</div>
       </section>
     </main>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { PlanVariant, WeekendOptionsResponse, WeekendOption } from "@/lib/types";
+import { headers } from "next/headers";
 
 function getActivePlan(searchParams: Record<string, string | string[] | undefined>): PlanVariant {
   const raw = searchParams.plan;
@@ -9,7 +10,7 @@ function getActivePlan(searchParams: Record<string, string | string[] | undefine
 
 function optionCard(opt: WeekendOption, origin: string, maxDriveMins: number, plan: PlanVariant) {
   const hike = plan === "A" ? opt.satHike.planA : opt.satHike.planB;
-  const planHref = `/plan/${encodeURIComponent(opt.id)}?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=${plan}`;
+  const planHref = `/option/${encodeURIComponent(opt.id)}?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=${plan}`;
 
   return (
     <div
@@ -58,11 +59,13 @@ export default async function OptionsPage({
   const maxDriveMins = Number((Array.isArray(searchParams.maxDriveMins) ? searchParams.maxDriveMins[0] : searchParams.maxDriveMins) ?? 120);
   const plan = getActivePlan(searchParams);
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/weekend-options?origin=${encodeURIComponent(
-    origin
-  )}&maxDriveMins=${maxDriveMins}`;
+  // Build an absolute URL for server-side fetches (works on Vercel + local).
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") ?? "http";
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  const apiUrl = `${proto}://${host}/api/weekend-options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}`;
 
-  const res = await fetch(url, { cache: "no-store" });
+  const res = await fetch(apiUrl, { cache: "no-store" });
   const data = (await res.json()) as WeekendOptionsResponse;
 
   return (
