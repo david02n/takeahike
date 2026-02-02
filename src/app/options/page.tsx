@@ -56,14 +56,19 @@ export default async function OptionsPage({
   searchParams: Record<string, string | string[] | undefined>;
 }) {
   const origin = (Array.isArray(searchParams.origin) ? searchParams.origin[0] : searchParams.origin) ?? "PO1";
-  const maxDriveMins = Number((Array.isArray(searchParams.maxDriveMins) ? searchParams.maxDriveMins[0] : searchParams.maxDriveMins) ?? 120);
+  const maxDriveMins = Number(
+    (Array.isArray(searchParams.maxDriveMins) ? searchParams.maxDriveMins[0] : searchParams.maxDriveMins) ?? 120,
+  );
+  const startDate = (Array.isArray(searchParams.startDate) ? searchParams.startDate[0] : searchParams.startDate) ?? null;
   const plan = getActivePlan(searchParams);
 
   // Build an absolute URL for server-side fetches (works on Vercel + local).
   const h = await headers();
   const proto = h.get("x-forwarded-proto") ?? "http";
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
-  const apiUrl = `${proto}://${host}/api/weekend-options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}`;
+  const apiUrl = `${proto}://${host}/api/weekend-options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}${
+    startDate ? `&startDate=${encodeURIComponent(startDate)}` : ""
+  }`;
 
   const res = await fetch(apiUrl, { cache: "no-store" });
   const data = (await res.json()) as WeekendOptionsResponse;
@@ -74,7 +79,7 @@ export default async function OptionsPage({
         <div>
           <h1 style={{ fontSize: 22, marginBottom: 6 }}>Weekend options</h1>
           <div style={{ fontSize: 12, color: "#666" }}>
-            From {origin} • ≤ {maxDriveMins} mins • Sat–Sun (1 night)
+            From {origin} • ≤ {maxDriveMins} mins • {startDate ? `${startDate} →` : "Sat–Sun"} 1 night
           </div>
         </div>
         <Link href="/">Edit setup</Link>
@@ -84,7 +89,7 @@ export default async function OptionsPage({
         <div style={{ fontSize: 12, color: "#666" }}>Weather plan</div>
         <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
           <Link
-            href={`/options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=A`}
+            href={`/options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=A${startDate ? `&startDate=${encodeURIComponent(startDate)}` : ""}`}
             style={{
               padding: "8px 12px",
               border: "1px solid #ddd",
@@ -97,7 +102,7 @@ export default async function OptionsPage({
             Plan A (good weather)
           </Link>
           <Link
-            href={`/options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=B`}
+            href={`/options?origin=${encodeURIComponent(origin)}&maxDriveMins=${maxDriveMins}&plan=B${startDate ? `&startDate=${encodeURIComponent(startDate)}` : ""}`}
             style={{
               padding: "8px 12px",
               border: "1px solid #ddd",
