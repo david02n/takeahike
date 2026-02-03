@@ -1,0 +1,45 @@
+{
+  "notes": "Fixture-only. Replace with real provider search later.",
+  "towns": {
+    "Marlborough": [
+      {
+        "id": "lodg_marl_1",
+        "name": "The Merchant's House Hotel",
+        "provider": "fixture",
+        "price": { "currency": "GBP", "perNight": 189, "total": 378, "feesIncluded": true },
+        "rating": { "score": 8.6, "count": 420 },
+        "policies": { "refundable": true, "freeCancelUntil": "2026-02-10", "payLater": true },
+        "amenities": ["wifi_good", "quiet_room"],
+        "accessibility": { "stepFree": false, "lift": false, "notes": "Ask about step-free rooms" },
+        "distanceToTrailhead": { "minutesByCar": 12 },
+        "url": "https://example.com/marlborough/merchant-house"
+      },
+      {
+        "id": "lodg_marl_2",
+        "name": "Premier Inn Marlborough",
+        "provider": "fixture",
+        "price": { "currency": "GBP", "perNight": 152, "total": 304, "feesIncluded": true },
+        "rating": { "score": 8.1, "count": 980 },
+        "policies": { "refundable": false, "freeCancelUntil": null, "payLater": false },
+        "amenities": ["wifi_good"],
+        "accessibility": { "stepFree": true, "lift": true, "notes": "Accessible rooms available" },
+        "distanceToTrailhead": { "minutesByCar": 10 },
+        "url": "https://example.com/marlborough/premier"
+      }
+    ],
+    "Wareham": [
+      {
+        "id": "lodg_war_1",
+        "name": "The Old Granary",
+        "provider": "fixture",
+        "price": { "currency": "GBP", "perNight": 176, "total": 352, "feesIncluded": true },
+        "rating": { "score": 8.8, "count": 260 },
+        "policies": { "refundable": true, "freeCancelUntil": "2026-02-10", "payLater": true },
+        "amenities": ["wifi_good", "parking"],
+        "accessibility": { "stepFree": false, "lift": false, "notes": "Stairs to some rooms" },
+        "distanceToTrailhead": { "minutesByCar": 18 },
+        "url": "https://example.com/wareham/old-granary"
+      }
+    ]
+  }
+}

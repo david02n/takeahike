@@ -32,8 +32,9 @@ export function SharePlanButton({
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to create plan");
       setSlug(data.slug);
-    } catch (e: any) {
-      setError(e?.message || String(e));
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setError(msg);
     } finally {
       setLoading(false);
     }

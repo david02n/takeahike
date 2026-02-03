@@ -48,6 +48,32 @@ export type WeekendOption = {
   stayLinks: Array<{ townName: string; googleHotelUrl: string }>;
 };
 
+export type LodgingOption = {
+  id: string;
+  name: string;
+  provider: "fixture" | "booking" | "expedia" | "airbnb" | "other";
+  price: { currency: string; perNight: number; total: number; feesIncluded: boolean };
+  rating: { score: number; count: number };
+  policies: { refundable: boolean; freeCancelUntil: string | null; payLater: boolean };
+  amenities: string[];
+  accessibility: { stepFree: boolean; lift: boolean; notes?: string };
+  distanceToTrailhead: { minutesByCar: number };
+  url: string;
+};
+
+export type LodgingFixtureDb = {
+  notes?: string;
+  towns: Record<string, LodgingOption[]>;
+};
+
+export type LodgingSearchResponse = {
+  townName: string;
+  checkIn: string;
+  nights: number;
+  guests: number;
+  options: LodgingOption[];
+};
+
 export type WeekendOptionsResponse = {
   originLabel: string;
   maxDriveMins: number;

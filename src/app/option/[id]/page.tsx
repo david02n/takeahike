@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { PlanVariant, WeekendOptionsResponse, WeekendOption } from "@/lib/types";
+import type { LodgingSearchResponse, PlanVariant, WeekendOptionsResponse, WeekendOption } from "@/lib/types";
 import { SharePlanButton } from "@/components/SharePlan";
 
 function getPlanVariant(searchParams: Record<string, string | string[] | undefined>): PlanVariant {
@@ -56,6 +56,11 @@ export default async function PlanPage({
   const data = (await res.json()) as WeekendOptionsResponse;
   const opt = data.options.find((o) => o.id === id) as WeekendOption | undefined;
 
+  // Lodging (v0 fixtures)
+  const checkIn = (Array.isArray(searchParams.checkIn) ? searchParams.checkIn[0] : searchParams.checkIn) ?? null;
+  const nights = Number((Array.isArray(searchParams.nights) ? searchParams.nights[0] : searchParams.nights) ?? 2);
+  const guests = Number((Array.isArray(searchParams.guests) ? searchParams.guests[0] : searchParams.guests) ?? 2);
+
   if (!opt) {
     return (
       <main style={{ maxWidth: 760, margin: "40px auto", padding: "0 16px" }}>
@@ -69,6 +74,14 @@ export default async function PlanPage({
   }
 
   const hike = plan === "A" ? opt.satHike.planA : opt.satHike.planB;
+
+  // Fetch lodging options (fixtures). If checkIn not supplied, default to startDate from options page (Sat).
+  const inferredCheckIn = checkIn ?? new Date().toISOString().slice(0, 10);
+  const lodgingUrl = `${proto}://${host}/api/lodging-options?town=${encodeURIComponent(opt.baseTown.name)}&checkIn=${encodeURIComponent(
+    inferredCheckIn,
+  )}&nights=${nights}&guests=${guests}`;
+  const lodgingRes = await fetch(lodgingUrl, { cache: "no-store" });
+  const lodging = (await lodgingRes.json()) as LodgingSearchResponse;
 
   return (
     <main style={{ maxWidth: 760, margin: "40px auto", padding: "0 16px" }}>
@@ -161,17 +174,74 @@ export default async function PlanPage({
       </section>
 
       <section style={{ marginTop: 16, border: "1px solid #eee", borderRadius: 12, padding: 16 }}>
-        <h2 style={{ fontSize: 16, marginTop: 0 }}>Where to stay</h2>
+        <h2 style={{ fontSize: 16, marginTop: 0 }}>Where to stay (near trailhead)</h2>
         <div style={{ fontSize: 12, color: "#666", marginBottom: 10 }}>
-          You’ll search and book on Google/partner sites. Prices and availability are shown there.
+          First pass: fixture-based availability/pricing. We’ll replace with live provider search.
         </div>
-        <ul>
+
+        {lodging.options.length === 0 ? (
+          <div style={{ padding: 12, border: "1px solid #f1c40f", borderRadius: 12 }}>
+            <strong>No lodging fixtures for {lodging.townName}.</strong>
+            <div style={{ marginTop: 8 }}>Fallback: search on Google.</div>
+            <ul style={{ marginTop: 10 }}>
+              {opt.stayLinks.map((l, idx) => (
+                <li key={idx} style={{ marginBottom: 10 }}>
+                  <a href={l.googleHotelUrl} target="_blank" rel="noreferrer">
+                    Search hotels on Google ({l.townName})
+                  </a>{" "}
+                  <span style={{ fontSize: 12, color: "#666" }}>— opens in a new tab</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div style={{ display: "grid", gap: 10 }}>
+            {lodging.options.map((o) => (
+              <div key={o.id} style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 600 }}>{o.name}</div>
+                    <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>
+                      {o.distanceToTrailhead.minutesByCar} min drive to trailhead • {o.rating.score.toFixed(1)} ({o.rating.count})
+                    </div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontSize: 16, fontWeight: 700 }}>
+                      {o.price.currency} {o.price.perNight}/night
+                    </div>
+                    <div style={{ fontSize: 12, color: "#666" }}>{o.price.currency} {o.price.total} total</div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap", fontSize: 12 }}>
+                  <span style={{ padding: "4px 8px", border: "1px solid #ddd", borderRadius: 999 }}>
+                    {o.policies.refundable ? "Refundable" : "Non‑refundable"}
+                  </span>
+                  <span style={{ padding: "4px 8px", border: "1px solid #ddd", borderRadius: 999 }}>
+                    {o.policies.payLater ? "Pay later" : "Prepay"}
+                  </span>
+                  <span style={{ padding: "4px 8px", border: "1px solid #ddd", borderRadius: 999 }}>
+                    {o.accessibility.stepFree ? "Step‑free" : "Step‑free unknown"}
+                  </span>
+                </div>
+
+                <div style={{ marginTop: 10, fontSize: 12, color: "#444" }}>
+                  <a href={o.url} target="_blank" rel="noreferrer">View listing →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div style={{ marginTop: 12, fontSize: 12, color: "#666" }}>
+          Want more? You can still search and book on Google/partner sites.
+        </div>
+        <ul style={{ marginTop: 8 }}>
           {opt.stayLinks.map((l, idx) => (
-            <li key={idx} style={{ marginBottom: 10 }}>
+            <li key={idx} style={{ marginBottom: 8 }}>
               <a href={l.googleHotelUrl} target="_blank" rel="noreferrer">
                 Search hotels on Google ({l.townName})
-              </a>{" "}
-              <span style={{ fontSize: 12, color: "#666" }}>— opens in a new tab</span>
+              </a>
             </li>
           ))}
         </ul>

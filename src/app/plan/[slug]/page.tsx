@@ -1,6 +1,12 @@
 import Link from "next/link";
-import type { PlanVariant, WeekendOption } from "@/lib/types";
+import type { PlanVariant, RouteReference, WeekendOption } from "@/lib/types";
 import { headers } from "next/headers";
+
+type PlanSnapshot = {
+  option: WeekendOption;
+  originLabel: string;
+  maxDriveMins: number;
+};
 
 function getPlanVariant(searchParams: Record<string, string | string[] | undefined>): PlanVariant {
   const raw = searchParams.plan;
@@ -50,10 +56,10 @@ export default async function PlanSlugPage({
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
 
   const planUrl = `${proto}://${host}/api/plan/${encodeURIComponent(slug)}`;
-  const payload = (await (await fetch(planUrl, { cache: "no-store" })).json()) as any;
+  const payload = (await (await fetch(planUrl, { cache: "no-store" })).json()) as PlanSnapshot;
 
   // Payload shape is our stored snapshot. In MVP we store the whole option.
-  const opt = payload.option as WeekendOption;
+  const opt = payload.option;
   const origin = payload.originLabel ?? "PO1";
   const maxDriveMins = payload.maxDriveMins ?? 120;
 
@@ -118,7 +124,7 @@ export default async function PlanSlugPage({
           Use these links for navigation and the latest trail notes.
         </div>
         <ul>
-          {hike.routeReferences.map((r: any, idx: number) => (
+          {hike.routeReferences.map((r: RouteReference, idx: number) => (
             <li key={idx} style={{ marginBottom: 8 }}>
               <a href={r.url} target="_blank" rel="noreferrer">
                 {r.title}
@@ -155,7 +161,7 @@ export default async function PlanSlugPage({
           You’ll search and book on Google/partner sites. Prices and availability are shown there.
         </div>
         <ul>
-          {opt.stayLinks.map((l: any, idx: number) => (
+          {opt.stayLinks.map((l, idx: number) => (
             <li key={idx} style={{ marginBottom: 10 }}>
               <a href={l.googleHotelUrl} target="_blank" rel="noreferrer">
                 Search hotels on Google ({l.townName})
